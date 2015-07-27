@@ -1,0 +1,32 @@
+{
+  "name": "Cast-Central-Web",
+  "version": "0.0.1",
+  "authors": [
+    "Justin Lathrop <jelathrop@gmail.com>"
+  ],
+  "description": "Web interface into the npm 'cast-central-service'.",
+  "main": "app.js",
+  "keywords": [
+    "angularjs",
+    "cast-central",
+    "cast",
+    "roku",
+    "googlecast",
+    "chromecast"
+  ],
+  "license": "IDC",
+  "homepage": "https://github.com/cast-central",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.13",
+    "angular-route": "~1.3.13",
+    "angular-sanitize": "~1.3.13"
+  }
+}

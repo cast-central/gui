@@ -1,2 +1,3 @@
-# gui
-Web GUI to help interface with the cast-central RESTful interface
+Cast-Central-Web
+----------------
+Web interface into the Cast-Central-Service.
