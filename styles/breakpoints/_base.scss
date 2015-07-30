@@ -118,6 +118,10 @@ HEADER STYLES
 	padding: 0 50px;
 	text-align: center;
 
+	h2 {
+		float: left;
+	}
+
 	a {
 		font-size: $small;
 		color: $black;
@@ -140,20 +144,8 @@ HEADER STYLES
 	}
 }
 
-#logo {
-	margin: 0.75em 0;
-	display: none;
-
-	a {
-		color: $white;
-	}
-}
-
-/*********************
-NAVIGATION STYLES
-*********************/
-
 .main-nav {
+	float: left;
 	border-bottom: 0;
 	margin: 0;
 	display: none;
@@ -169,40 +161,6 @@ NAVIGATION STYLES
 	}
 }
 
-
-/*********************
-RESPONSIVE NAV
-*********************/
-
-.hamburger {
-
-	&:hover,
-	&:focus {
-		text-decoration: none;
-	}
-	
-	&:before {
-		content:'\2261';
-		font-size: 24px;
-		font-weight: bold;
-		color: #555;
-	}
-}
-
-.responsive-wrapper {
-
-	display: none;
-
-	a {
-		display: block;
-		width: 100%;
-		line-height: 2;
-		text-align: center;
-		background: #fff;
-		color: $text-color;
-	}
-}
-
 /*********************
 MAIN PAGE
 *********************/
@@ -211,25 +169,20 @@ MAIN PAGE
 	margin-top: 1.5em;
 }
 
-// slider
-.slider {
-	margin-bottom: 30px;
-}
-
-.image-slider {
-	max-height: 400px;
-
-	img {
-		width: 100%;
-	}
-}
-
 /*********************
 FOOTER STYLES
 *********************/
 
 .footer {
 	clear: both;
-	background-color: $black;
-	color: $light-gray;
+	background-color: $white;
+	//color: $light-gray;
+
+	.footer-author {
+		float: left;
+	}
+
+	.footer-timestamp {
+		float: right;
+	}
 }

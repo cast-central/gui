@@ -11,12 +11,16 @@
         .module('cast-central-web')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['LocalStorage', 'QueryService'];
+    MainController.$inject = ['LocalStorage', 'CastService', '$log', '$interval'];
 
-    function MainController(LocalStorage, QueryService){
+    function MainController(LocalStorage, CastService, $log, $interval){
         var self = this;
 
-        ////////////  function definitions
+        $interval(function(){
+            CastService.list("", {}, function(data, error){
+                $log.debug(data);
+            });
+        }, 10000);
 
         /**
          * Load some data

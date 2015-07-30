@@ -18,6 +18,21 @@
                 controller: 'MainController',
                 controllerAs: 'main'
             })
+            .when('/chromecast', {
+                templateUrl: 'views/chromecast.html',
+                controller: 'MainController',
+                controllerAs: 'main'
+            })
+            .when('/roku', {
+                templateUrl: 'views/roku.html',
+                controller: 'MainController',
+                controllerAs: 'main'
+            })
+            .when('/other', {
+                templateUrl: 'views/other.html',
+                controller: 'MainController',
+                controllerAs: 'main'
+            })
             .otherwise({
                 redirectTo: '/'
             });
