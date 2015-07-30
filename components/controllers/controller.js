@@ -11,9 +11,9 @@
         .module('cast-central-web')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['LocalStorage', 'CastService', '$log', '$interval'];
+    MainController.$inject = ['CastService', '$log', '$interval'];
 
-    function MainController(LocalStorage, CastService, $log, $interval){
+    function MainController(CastService, $log, $interval){
         var self = this;
 
         $interval(function(){

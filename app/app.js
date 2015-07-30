@@ -44,9 +44,9 @@
         .module('cast-central-web')
         .factory('authInterceptor', authInterceptor);
 
-    authInterceptor.$inject = ['$rootScope', '$q', 'LocalStorage', '$location'];
+    authInterceptor.$inject = ['$rootScope', '$q', '$location'];
 
-    function authInterceptor($rootScope, $q, LocalStorage, $location){
+    function authInterceptor($rootScope, $q, $location){
         return({
             // intercept every request
             request: function(config) {
