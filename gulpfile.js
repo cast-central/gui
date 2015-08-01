@@ -27,14 +27,14 @@ var gulp            = require('gulp'),
 
 // optimize images
 gulp.task('images', function() {
-  return gulp.src('./images/*')
-    .pipe($.changed('./_build/images'))
+  return gulp.src('./resources/images/*')
+    .pipe($.changed('./_build/resources/images'))
     .pipe($.imagemin({
       optimizationLevel: 3,
       progressive: true,
       interlaced: true
     }))
-    .pipe(gulp.dest('./_build/images'));
+    .pipe(gulp.dest('./_build/resources/images'));
 });
 
 // browser-sync task, only cares about compiled CSS
@@ -48,18 +48,18 @@ gulp.task('browser-sync', function() {
 
 // minify JS
 gulp.task('minify-js', function() {
-  gulp.src('js/*.js')
+  gulp.src('./resources/js/*.js')
     .pipe($.uglify())
     .pipe(gulp.dest('./_build/'));
 });
 
 // minify CSS
 gulp.task('minify-css', function() {
-  gulp.src(['./styles/**/*.css', '!./styles/**/*.min.css'])
+  gulp.src(['./resources/css/**/*.css', '!./resources/css/**/*.min.css'])
     .pipe($.rename({suffix: '.min'}))
     .pipe($.minifyCss({keepBreaks:true}))
-    .pipe(gulp.dest('./styles/'))
-    .pipe(gulp.dest('./_build/css/'));
+    .pipe(gulp.dest('./resources/css/'))
+    .pipe(gulp.dest('./_build/resources/css/'));
 });
 
 // minify HTML
@@ -76,11 +76,11 @@ gulp.task('minify-html', function() {
 });
 
 // copy fonts from a module outside of our project (like Bower)
-gulp.task('fonts', function() {
-  gulp.src('./fonts/**/*.{ttf,woff,eof,eot,svg}')
-    .pipe($.changed('./_build/fonts'))
-    .pipe(gulp.dest('./_build/fonts'));
-});
+//gulp.task('fonts', function() {
+//  gulp.src('./fonts/**/*.{ttf,woff,eof,eot,svg}')
+//    .pipe($.changed('./_build/fonts'))
+//    .pipe(gulp.dest('./_build/fonts'));
+//});
 
 // start webserver
 gulp.task('server', function(done) {
@@ -111,15 +111,15 @@ gulp.task('clean:build', function (cb) {
 
 // concat files
 gulp.task('concat', function() {
-  gulp.src('./js/*.js')
-    .pipe($.concat('scripts.js'))
-    .pipe(gulp.dest('./_build/'));
+  gulp.src('./resources/js/*.js')
+    .pipe($.concat('./resources/js/scripts.js'))
+    .pipe(gulp.dest('./_build/resources/js'));
 });
 
 // SASS task, will run when any SCSS files change & BrowserSync
 // will auto-update browsers
 gulp.task('sass', function() {
-  return gulp.src('styles/style.scss')
+  return gulp.src('resources/sass/style.scss')
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       style: 'expanded'
@@ -129,7 +129,7 @@ gulp.task('sass', function() {
       message: 'Error(s) occurred during compile!'
     }))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('styles'))
+    .pipe(gulp.dest('resources/sass'))
     .pipe(reload({
       stream: true
     }))
@@ -142,13 +142,13 @@ gulp.task('sass', function() {
 gulp.task('sass:build', function() {
   var s = $.size();
 
-  return gulp.src('styles/style.scss')
+  return gulp.src('resources/sass/style.scss')
     .pipe($.sass({
       style: 'compact'
     }))
     .pipe($.autoprefixer('last 3 version'))
     .pipe($.uncss({
-      html: ['./index.html', './views/**/*.html', './components/**/*.html'],
+      html: ['./index.html', './modules/**/*.html'],
       ignore: [
         '.index',
         '.slick',
@@ -163,7 +163,7 @@ gulp.task('sass:build', function() {
       advanced: false
     }))
     .pipe($.rename({suffix: '.min'}))
-    .pipe(gulp.dest('_build/css'))
+    .pipe(gulp.dest('_build/resources/css'))
     .pipe(s)
     .pipe($.notify({
       onLast: true,
@@ -182,7 +182,7 @@ gulp.task('usemin', function() {
   return gulp.src('./index.html')
     // add templates path
     .pipe($.htmlReplace({
-      'templates': '<script type="text/javascript" src="js/templates.js"></script>'
+      'templates': '<script type="text/javascript" src="resources/js/templates.js"></script>'
     }))
     .pipe($.usemin({
       css: [$.minifyCss(), 'concat'],
@@ -198,7 +198,7 @@ gulp.task('usemin', function() {
 // make templateCache from all HTML files
 gulp.task('templates', function() {
   return gulp.src([
-      './**/*.html',
+      './modules/**/*.html',
       '!bower_components/**/*.*',
       '!node_modules/**/*.*',
       '!_build/**/*.*'
@@ -207,28 +207,13 @@ gulp.task('templates', function() {
     .pipe($.angularTemplatecache({
       module: 'cast-central-web'
     }))
-    .pipe(gulp.dest('_build/js'));
+    .pipe(gulp.dest('_build/resources/js'));
 });
 
 // reload all Browsers
 gulp.task('bs-reload', function() {
   browserSync.reload();
 });
-
-// calculate build folder size
-gulp.task('build:size', function() {
-  var s = $.size();
-
-  return gulp.src('./_build/**/*.*')
-    .pipe(s)
-    .pipe($.notify({
-      onLast: true,
-      message: function() {
-        return 'Total build size ' + s.prettySize;
-      }
-    }));
-});
-
 
 // default task to be run with `gulp` command
 // this default task will run BrowserSync & then use Gulp to watch files.
@@ -239,11 +224,10 @@ gulp.task('default', ['browser-sync', 'sass', 'minify-css'], function() {
       reload(file.path);
     }
   });
-  gulp.watch(['*.html', 'views/*.html'], ['bs-reload']);
-  gulp.watch(['app/*.js', 'components/**/*.js', 'js/*.js'], ['bs-reload']);
-  gulp.watch('styles/**/*.scss', ['sass', 'minify-css']);
+  gulp.watch(['*.html', 'modules/**/*.html'], ['bs-reload']);
+  gulp.watch(['*.js', 'modules/**/*.js', 'resources/js/*.js'], ['bs-reload']);
+  gulp.watch('resources/**/*.scss', 'resources/**/**/*.scss', ['sass', 'minify-css']);
 });
-
 
 /**
  * build task:
@@ -264,7 +248,6 @@ gulp.task('build', function(callback) {
     'images',
     'templates',
     'usemin',
-    'fonts',
-    'build:size',
+    'fonts'
     callback);
 });

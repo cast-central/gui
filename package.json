@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "license": "IDC",
   "description": "Interfaces and present a web GUI for handling the cast-central-service.",
-  "main": "app/app.js",
+  "main": "app.js",
   "devDependencies": {
     "bower": "*",
     "browser-sync": "^1.9.1",
