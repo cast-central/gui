@@ -2,12 +2,12 @@
 
 (function(){
     angular
-        .module('cast-central-web')
-        .factory('CastFactory', [
-            '$log', '$http', 'CONSTANTS', CastFactory
+        .module('cast-central-web.casts')
+        .factory('CastsFactory', [
+            '$log', '$http', 'CONSTANTS', CastsFactory
         ]);
 
-    function CastFactory($log, $http, CONSTANTS){
+    function CastsFactory($log, $http, CONSTANTS){
         // 'Real' service interaction
         var service = {
             'list': list,

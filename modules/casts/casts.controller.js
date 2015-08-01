@@ -2,12 +2,12 @@
 
 (function(){
     angular
-        .module('cast-central-web')
-        .controller('CastController', CastsController);
+        .module('cast-central-web.casts')
+        .controller('CastsController', CastsController);
 
-    CastsController.$inject = ['CastFactory', '$log', '$interval'];
+    CastsController.$inject = ['CastsFactory', '$log', '$interval'];
 
-    function CastsController(CastFactory, $log, $interval){
+    function CastsController(CastsFactory, $log, $interval){
         var self = this;
 
         /*$interval(function(){

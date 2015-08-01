@@ -3,21 +3,23 @@
 (function(){
     angular
         .module('cast-central-web', [
-            'ngRoute'
+            'ngRoute',
+            'cast-central-web.common',
+            'cast-central-web.casts'
         ])
         .config(config);
 
-    config.$inject = ['$routeProvider', '$locationProvider'];
+    config.$inject = ['$locationProvider', '$routeProvider'];
 
-    function config($routeProvider, $locationProvider){
+    function config($locationProvider, $routeProvider){
         $locationProvider.html5Mode(false);
 
         $routeProvider
             .when('/howto', {
-                templateUrl: 'components/howto/index.html'
+                templateUrl: 'modules/howto/index.html'
             })
             .when('/casts/:castsType', {
-                templateUrl: 'components/common/casts.html',
+                templateUrl: 'modules/casts/casts.html',
                 controller: 'CastsController',
                 controllerAs: 'casts'
             })

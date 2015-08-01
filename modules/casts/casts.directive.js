@@ -2,7 +2,7 @@
 
 (function(){
     angular
-        .module('cast-central-web')
+        .module('cast-central-web.casts')
         .directive('casts', renderCasts);
 
     function renderCasts(){

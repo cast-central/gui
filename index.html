@@ -35,6 +35,9 @@
 
 	<!-- Main view for templates -->
 	<div data-ng-view="" class="container"></div>
+
+	<!-- Foot -->
+	<!--<main-footer></main-footer>-->
 </body>
 	<!-- Vendors -->
 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
@@ -44,9 +47,16 @@
 	<script type="text/javascript" src="app/app.js"></script>
 	<script type="text/javascript" src="app/config.js"></script>
 
+	<!-- Howto -->
+	<script type="text/javascript" src="modules/howto/module.js"></script>
+
 	<!-- Common -->
-	<script type="text/javascript" src="components/common/main.header.directive.js"></script>
-	<script type="text/javascript" src="components/common/casts.directive.js"></script>
-	<script type="text/javascript" src="components/common/casts.factory.js"></script>
-	<script type="text/javascript" src="components/common/casts.controller.js"></script>
+	<script type="text/javascript" src="modules/common/module.js"></script>
+	<script type="text/javascript" src="modules/common/main.header.directive.js"></script>
+
+	<!-- Casts -->
+	<script type="text/javascript" src="modules/casts/module.js"></script>
+	<script type="text/javascript" src="modules/casts/casts.directive.js"></script>
+	<script type="text/javascript" src="modules/casts/casts.factory.js"></script>
+	<script type="text/javascript" src="modules/casts/casts.controller.js"></script>
 </html>
