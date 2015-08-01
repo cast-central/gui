@@ -23,9 +23,7 @@
 	<meta name="msapplication-TileColor" content="#f01d4f">
 
 	<!-- CSS -->
-	<!-- build:css css/style.min.css -->
 	<link rel="stylesheet" type="text/css" href="styles/style.css" />
-	<!-- endbuild -->
 </head>
 <body class="main-wrapper">
 	<!--[if lt IE 8]>
@@ -39,39 +37,16 @@
 	<div data-ng-view="" class="container"></div>
 </body>
 	<!-- Vendors -->
-	<!-- build:nonangularlibs js/nonangularlibs.js -->
-	<script type="text/javascript" src="js/nonangular/jquery-1.11.2.min.js"></script>
-	<!-- endbuild -->
-
-	<!-- Non-angular libraries -->
-	<!-- build:libs js/libs.js -->
-	<script type="text/javascript" src="js/nonangular/lodash.min.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
-	<!-- endbuild -->
-
-	<!-- Angular external libraries for application -->
-	<!-- build:angularlibs js/angularlibs.js -->
 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
 	<script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
-	<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-	<!-- endbuild -->
 
-	<!-- Angular components -->
-	<!-- build:appcomponents js/appcomponents.js -->
+	<!-- Main -->
 	<script type="text/javascript" src="app/app.js"></script>
 	<script type="text/javascript" src="app/config.js"></script>
-	<script type="text/javascript" src="components/factories/casts.factory.js"></script>
-	<script type="text/javascript" src="components/directives/main.header.directive.js"></script>
-	<script type="text/javascript" src="components/directives/casts.directive.js"></script>
-	<!-- endbuild -->
 
-	<!-- Application sections -->
-	<!-- build:mainapp js/mainapp.js -->
-	<script type="text/javascript" src="components/factories/factory.js"></script>
-	<script type="text/javascript" src="components/controllers/controller.js"></script>
-	<!-- endbuild -->
-
-	<!-- templates from $templateCache -->
-	<!-- build:templates -->
-	<!-- endbuild -->
+	<!-- Common -->
+	<script type="text/javascript" src="components/common/main.header.directive.js"></script>
+	<script type="text/javascript" src="components/common/casts.directive.js"></script>
+	<script type="text/javascript" src="components/common/casts.factory.js"></script>
+	<script type="text/javascript" src="components/common/casts.controller.js"></script>
 </html>

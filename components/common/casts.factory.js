@@ -3,11 +3,11 @@
 (function(){
     angular
         .module('cast-central-web')
-        .factory('CastService', [
-            '$log', '$http', 'CONSTANTS', CastService
+        .factory('CastFactory', [
+            '$log', '$http', 'CONSTANTS', CastFactory
         ]);
 
-    function CastService($log, $http, CONSTANTS){
+    function CastFactory($log, $http, CONSTANTS){
         // 'Real' service interaction
         var service = {
             'list': list,

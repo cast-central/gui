@@ -3,13 +3,13 @@
 (function(){
     angular
         .module('cast-central-web')
-        .directive('mainHeader', renderMainNav);
+        .directive('casts', renderCasts);
 
-    function renderMainNav(){
+    function renderCasts(){
         // Definition of directive
         var directiveDefinitionObject = {
             restrict: 'E',
-            templateUrl: 'components/directives/main-header.html'
+            templateUrl: 'components/common/casts.html'
         };
 
         return directiveDefinitionObject;
