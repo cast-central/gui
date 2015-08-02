@@ -9,7 +9,10 @@
     "node-sass": "*",
     "node-minify": "*",
     "glob": "*",
-    "async": "*"
+    "async": "*",
+    "optimist": "*",
+    "exec-sync": "*",
+    "express": "*"
   },
   "scripts": {
     "postinstall": "bower install --no-interactive --allow-root"
