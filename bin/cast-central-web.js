@@ -76,7 +76,7 @@ function compile_sass(cb){
 function compress_js(cb){
     console.log('Compressing javascript...');
     new compressor.minify({
-        type: 'no-compress',
+        type: 'yui-js',
         fileIn: glob_arr_patterns([
             // Order matters here
             prefix+'bower_components/angular/*.min.js',
