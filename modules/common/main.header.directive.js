@@ -9,7 +9,7 @@
         // Definition of directive
         var directiveDefinitionObject = {
             restrict: 'E',
-            templateUrl: 'modules/common/main-header.html'
+            templateUrl: 'main-header.html'
         };
 
         return directiveDefinitionObject;

@@ -9,7 +9,7 @@
         // Definition of directive
         var directiveDefinitionObject = {
             restrict: 'E',
-            templateUrl: 'components/common/casts.html'
+            templateUrl: 'casts.html'
         };
 
         return directiveDefinitionObject;

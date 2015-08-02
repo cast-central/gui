@@ -16,10 +16,10 @@
 
         $routeProvider
             .when('/howto', {
-                templateUrl: 'modules/howto/index.html'
+                templateUrl: 'howto.html'
             })
             .when('/casts/:castsType', {
-                templateUrl: 'modules/casts/casts.html',
+                templateUrl: 'casts.html',
                 controller: 'CastsController',
                 controllerAs: 'casts'
             })

@@ -13,7 +13,7 @@ var sass       = require('node-sass'),
     opts       = require('optimist')
         .usage(
             'Manages the cast-central-web application server.\n'+
-            'Usage: $0 {clean|build|start} <options>'
+            'Usage: $0 <options>'
         )
         .describe('host', 'The hostname/ip of the server to bind to').default('host', 'localhost')
         .describe('port', 'The port of the server to bind to').default('port', '8001')
@@ -40,14 +40,19 @@ if(argv.help){
     process.exit(0);
 }else{
     async.series(get_steps(), function(err, results){
-        if(argv.run){ run_server(); }
+        if(err){
+            console.log('Error: ', err);
+            process.exit(1);
+        }else{
+            if(argv.run){ run_server(); }
+        }
     });
 }
 
 // Clean the target dir
 function clean(cb){
     console.log('Cleaning...');
-    execSync('rm -r '+prefix+argv.target+'*');
+    execSync('/bin/rm -r '+prefix+argv.target+'*');
     cb(null);
 }
 
@@ -71,12 +76,29 @@ function compile_sass(cb){
 function compress_js(cb){
     console.log('Compressing javascript...');
     new compressor.minify({
-        type: 'yui-js',
+        type: 'no-compress',
         fileIn: glob_arr_patterns([
-            prefix+'bower_components/**/*.min.js',
+            // Order matters here
+            prefix+'bower_components/angular/*.min.js',
+            prefix+'bower_components/angular-route/*.min.js',
+
+            // Modules/Common
+            prefix+'modules/common/module.js',
+            prefix+'modules/common/main.header.directive.js',
+            prefix+'modules/common/main.footer.directive.js',
+
+            // Modules/Howto
+            prefix+'modules/howto/module.js',
+
+            // Modules/Casts
+            prefix+'modules/casts/module.js',
+            prefix+'modules/casts/casts.controller.js',
+            prefix+'modules/casts/casts.factory.js',
+            prefix+'modules/casts/casts.directive.js',
+
+            // Main
             prefix+'app.js',
-            prefix+'config.js',
-            prefix+'modules/**/*.js'
+            prefix+'config.js'
         ]),
         fileOut: prefix+argv.target+'app.min.js',
         callback: function(err, min){
@@ -103,21 +125,21 @@ function compress_css(cb){
 // Images
 function images(cb){
     console.log('Moving images...');
-    execSync('cp -r '+prefix+'resources/images '+prefix+argv.target);
+    execSync('/bin/cp -r '+prefix+'resources/images '+prefix+argv.target);
     cb(null);
 }
 
 // HTML
 function html(cb){
     console.log('Moving html...');
-    execSync('cp '+prefix+'*.html '+prefix+'modules/**/*.html '+prefix+argv.target);
+    execSync('/bin/cp '+prefix+'*.html '+prefix+'modules/**/*.html '+prefix+argv.target);
     cb(null);
 }
 
 // Test
 function test(cb){
     console.log('Moving test fixtures...');
-    execSync('cp -r '+prefix+'resources/data '+prefix+argv.target);
+    execSync('/bin/cp -r '+prefix+'resources/data '+prefix+argv.target);
     cb(null);
 }
 
@@ -163,11 +185,6 @@ function get_steps(){
         steps.push(html);
     }
     if(argv.dev){ steps.push(test); }
-
-    if(steps.length === 0){
-        opts.showHelp();
-        process.exit(1);
-    }
 
     return(steps);
 }
