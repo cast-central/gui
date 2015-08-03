@@ -10,6 +10,7 @@ var sass       = require('node-sass'),
     async      = require('async'),
     execSync   = require('exec-sync'),
     express    = require('express'),
+    chokidar   = require('chokidar'),
     opts       = require('optimist')
         .usage(
             'Manages the cast-central-web application server.\n'+
@@ -41,8 +42,7 @@ if(argv.help){
 }else{
     async.series(get_steps(), function(err, results){
         if(err){
-            console.log('Error: ', err);
-            process.exit(1);
+            error(err);
         }else{
             if(argv.run){ run_server(); }
         }
@@ -147,15 +147,27 @@ function test(cb){
 function run_server(){
     console.log('Starting server at '+argv.host+':'+argv.port+'.');
 
-    var app    = express().use(express.static(prefix+argv.target)),
-        server = app.listen(argv.port);
-
-    /*if(argv.dev){
-        fs.watch(prefix, function(event, filename){
+    if(argv.dev){
+        chokidar.watch(glob_arr_patterns([
+            prefix+'*.js',
+            prefix+'*.html',
+            prefix+'modules',
+            prefix+'resources'
+        ]), {
+            ignored: /[\/\\]\./,
+            persistent: true,
+            depth: 5
+        }).on('ready', function(){
+            console.log('Watching for changes...');
+        }).on('change', function(path){
             console.log('File change detected...')
-            async.series(get_steps(), function(err, results){  });
-        });
-    }*/
+            async.series(get_steps(), function(err, results){
+                if(err){ error(err); }
+            });
+        }).on('error', function(err){ error(err); });
+    }
+
+    express().use(express.static(prefix+argv.target)).listen(argv.port);
 }
 
 // Given an array of patterns, 
@@ -187,4 +199,11 @@ function get_steps(){
     if(argv.dev){ steps.push(test); }
 
     return(steps);
+}
+
+// Given an err object prints and exits the 
+// current process.
+function error(err){
+    console.log('Error:', err);
+    process.exit(1);
 }

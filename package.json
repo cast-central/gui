@@ -12,7 +12,8 @@
     "async": "*",
     "optimist": "*",
     "exec-sync": "*",
-    "express": "*"
+    "express": "*",
+    "chokidar": "*"
   },
   "scripts": {
     "postinstall": "bower install --no-interactive --allow-root"
