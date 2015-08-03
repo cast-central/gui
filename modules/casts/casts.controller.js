@@ -5,10 +5,13 @@
         .module('cast-central-web.casts')
         .controller('CastsController', CastsController);
 
-    CastsController.$inject = ['CastsFactory', '$log', '$interval'];
+    CastsController.$inject = ['CastsFactory', '$log', '$interval', '$routeParams'];
 
-    function CastsController(CastsFactory, $log, $interval){
+    function CastsController(CastsFactory, $log, $interval, $routeParams){
         var self = this;
+
+        // Get cast parameters
+        self.type = $routeParams.type || 'chromecast';
 
         /*$interval(function(){
             CastFactory.list("", {}, function(data, error){

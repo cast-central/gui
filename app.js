@@ -18,7 +18,7 @@
             .when('/howto', {
                 templateUrl: 'howto.html'
             })
-            .when('/casts/:castsType', {
+            .when('/casts/:type', {
                 templateUrl: 'casts.html',
                 controller: 'CastsController',
                 controllerAs: 'casts'
