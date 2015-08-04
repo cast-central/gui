@@ -52,7 +52,7 @@ if(argv.help){
 // Clean the target dir
 function clean(cb){
     console.log('Cleaning...');
-    execSync('/bin/rm -r '+prefix+argv.target+'*');
+    execSync('/bin/rm -rf '+prefix+argv.target+'*');
     cb(null);
 }
 
