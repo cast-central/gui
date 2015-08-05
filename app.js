@@ -1,11 +1,10 @@
-'use-strict';
-
 (function(){
+    'use-strict';
+
     angular
         .module('cast-central-web', [
             'ngRoute',
-            'cast-central-web.common',
-            'cast-central-web.casts'
+            'cast-central-web.common'
         ])
         .config(config);
 
@@ -17,11 +16,6 @@
         $routeProvider
             .when('/howto', {
                 templateUrl: 'howto.html'
-            })
-            .when('/casts/:type', {
-                templateUrl: 'casts.html',
-                controller: 'CastsController',
-                controllerAs: 'casts'
             })
             .otherwise({
                 redirectTo: '/howto'

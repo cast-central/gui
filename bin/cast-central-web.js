@@ -1,4 +1,4 @@
-#! /usr/bin/env nodejs
+#! /usr/bin/env node
 
 // CAST-CENTRAL-WEB
 // ----------------
@@ -35,15 +35,19 @@ var prefix = process.argv[1].split('/');
 prefix.pop();
 prefix = prefix.join('/') + '/../';
 
+var build_finished = true;
+
 // Process the options given
 if(argv.help){
     opts.showHelp();
     process.exit(0);
 }else{
+    build_finished = false;
     async.series(get_steps(), function(err, results){
         if(err){
             error(err);
         }else{
+            build_finished = true;
             if(argv.run){ run_server(); }
         }
     });
@@ -76,7 +80,7 @@ function compile_sass(cb){
 function compress_js(cb){
     console.log('Compressing javascript...');
     new compressor.minify({
-        type: 'yui-js',
+        type: argv.dev? 'no-compress': 'yui-js',
         fileIn: glob_arr_patterns([
             // Order matters here
             prefix+'bower_components/angular/*.min.js',
@@ -92,9 +96,8 @@ function compress_js(cb){
 
             // Modules/Casts
             prefix+'modules/casts/module.js',
-            prefix+'modules/casts/casts.controller.js',
-            prefix+'modules/casts/casts.factory.js',
-            prefix+'modules/casts/casts.directive.js',
+            prefix+'modules/casts/cast-central-service.factory.js',
+            prefix+'modules/casts/discovery.factory.js',
 
             // Main
             prefix+'app.js',
@@ -111,7 +114,7 @@ function compress_js(cb){
 function compress_css(cb){
     console.log('Compressing css...');
     new compressor.minify({
-        type: 'yui-css',
+        type: argv.dev? 'no-compress': 'yui-css',
         fileIn: [
             prefix+argv.target+'style.compiled.css'
         ],
@@ -160,10 +163,14 @@ function run_server(){
         }).on('ready', function(){
             console.log('Watching for changes...');
         }).on('change', function(path){
-            console.log('File change detected...')
-            async.series(get_steps(), function(err, results){
-                if(err){ error(err); }
-            });
+            if(build_finished){
+                console.log('Rebuilding...');
+                build_finished = false;
+                async.series(get_steps(), function(err, results){
+                    if(err){ error(err); }
+                    build_finished = true;
+                });
+            }
         }).on('error', function(err){ error(err); });
     }
 
