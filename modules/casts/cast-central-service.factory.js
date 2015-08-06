@@ -27,18 +27,9 @@
             'setVolume': setVolume,
             'setMute': setMute,
             'seek': seek,
-            'stop': stop
-        };
-
-        // Canned responses
-        var devService = {
-            'list': devList,
-            'launch': dev,
-            'load': dev,
-            'setVolume': dev,
-            'setMute': dev,
-            'seek': dev,
-            'stop': dev
+            'stop': stop,
+            'status': status,
+            'connect': connect
         };
 
         return(CONSTANTS.DEV? devService: service);
@@ -50,21 +41,8 @@
         function setMute(type, options, cb){ query(get_url('setMute', type, options), cb); }
         function seek(type, options, cb){ query(get_url('seek', type, options), cb); }
         function stop(type, options, cb){ query(get_url('stop', type, options), cb); }
-
-        // Universal method for DEV mode which switches 
-        // between error responses and success responses.
-        function devList(type, options, cb){ dev(type, options, cb, true); }
-        function dev(type, options, cb, list){
-            if(Math.floor(Math.random() * 10) > 2){
-                if(list || false){
-                    query('/data/'+type+'_list.json', "", cb);
-                }else{
-                    query('/data/api_success.json', "", cb);
-                }
-            }else{
-                query('/data/api_error.json', "", cb);
-            }
-        }
+        function status(type, options, cb){ query(get_url('status', type, options), cb); }
+        function connect(type, options, cb){ query(get_url('connect', type, options), cb); }
 
         // Standard ASYNC call to RESTful server calling 
         // callback with data or error responses.

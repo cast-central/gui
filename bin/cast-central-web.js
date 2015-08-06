@@ -96,8 +96,10 @@ function compress_js(cb){
 
             // Modules/Casts
             prefix+'modules/casts/module.js',
+            prefix+'modules/casts/cast.directive.js',
             prefix+'modules/casts/cast-central-service.factory.js',
             prefix+'modules/casts/discovery.factory.js',
+            prefix+'modules/casts/casts.controller.js',
 
             // Main
             prefix+'app.js',
@@ -142,7 +144,7 @@ function html(cb){
 // Test
 function test(cb){
     console.log('Moving test fixtures...');
-    execSync('/bin/cp -r '+prefix+'resources/data '+prefix+argv.target);
+    //execSync('/bin/cp -r '+prefix+'resources/data '+prefix+argv.target);
     cb(null);
 }
 
