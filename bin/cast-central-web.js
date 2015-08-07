@@ -83,8 +83,8 @@ function compress_js(cb){
         type: argv.dev? 'no-compress': 'yui-js',
         fileIn: glob_arr_patterns([
             // Order matters here
-            prefix+'bower_components/angular/*.min.js',
-            prefix+'bower_components/angular-route/*.min.js',
+            prefix+'bower_components/angular/angular.'+(argv.dev? '': 'min.')+'js',
+            prefix+'bower_components/angular-route/angular-route.'+(argv.dev? '': 'min.')+'js',
 
             // Modules/Common
             prefix+'modules/common/module.js',

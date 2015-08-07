@@ -4,13 +4,14 @@
     angular
         .module('cast-central-web', [
             'ngRoute',
+            'cast-central-web.common',
             'cast-central-web.casts'
         ])
         .config(config);
 
     config.$inject = ['$locationProvider', '$routeProvider'];
 
-    function config($locationProvider, $routeProvider){
+    function config($locationProvider, $routeProvider, CastsController){
         $locationProvider.html5Mode(false);
 
         $routeProvider

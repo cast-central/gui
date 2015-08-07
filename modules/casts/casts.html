@@ -1,11 +1,11 @@
 <h3>Casts</h3>
 <div class="container cf">
     <div>
-       	<div ng-repeat="cast_type in casts.cache">
-        		{{ cast_type }}
-        		<div ng-repeat="cast in casts.cache[cast_type]">
-        			<cast>{{ cast.name }}</cast>
-        		</div>
+       	<div ng-repeat="(cast_type, casts) in casts">
+    		{{ cast_type }}
+    		<div ng-repeat="cast in casts">
+    			{{ cast.name }}, {{ cast.address }}, {{ cast.port }}
+    		</div>
         </div>
     </div>
 </div>

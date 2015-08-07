@@ -8,12 +8,15 @@
 
 	angular
 		.module('cast-central-web.casts')
-		.controller('CastsCrontroller', CastsController);
+		.controller('CastsController', CastsController);
 
-	CastsController.$inject = ['$log', 'CastCentralServiceFactory', 'DiscoveryFactory'];
+	CastsController.$inject = ['$scope', '$log', 'DiscoveryFactory'];
 
-	function CastsController($log, CastCentralServiceFactory, DiscoveryFactory){
-		var self = this;
-		self.cache = DiscoveryFactory.cache();
+	function CastsController($scope, $log, DiscoveryFactory){
+		// Set subscription to updates of the cache
+		DiscoveryFactory.add_subscription('CastsController', function(cache){
+			$log.debug('CastsController - cache updated with:', cache);
+			$scope.casts = cache;
+		});
 	}
 })();
