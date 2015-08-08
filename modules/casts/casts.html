@@ -4,7 +4,7 @@
        	<div ng-repeat="(cast_type, casts) in casts">
     		{{ cast_type }}
     		<div ng-repeat="cast in casts">
-    			{{ cast.name }}, {{ cast.address }}, {{ cast.port }}
+    			<cast cast="cast"></cast>
     		</div>
         </div>
     </div>

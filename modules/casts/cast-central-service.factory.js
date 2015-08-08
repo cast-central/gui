@@ -27,58 +27,10 @@
             'seek': seek,
             'stop': stop,
             'status': status,
-            'connect': connect,
-            'list_with_status': list_with_status
+            'connect': connect
         };
 
         return(service);
-
-        // Get list of available casts, then query the 
-        // status of each and append that response to 
-        // each cast object.
-        // 
-        // TODO: Simplify this... Probably should put 
-        // the service side.
-        function list_with_status(type, options, cb){
-            // First query for list of casts
-            list(type, angular.extend(options, {'force': true}), function(data, error){
-                if(error || !data.success){
-                    cb(data, error);
-                    return;
-                }else{
-                    // Loop through each cast type returned
-                    for(var cast_type in data){
-                        // Given cast type, loop through and query each 
-                        // individual cast for its status
-                        for(var cast in data[cast_type]){
-                            // First make sure to connect service to cast device
-                            connect(type, angular.extend(options, {
-                                'name': data[cast_type][cast].name,
-                                'address': data[cast_type][cast].address,
-                                'port': data[cast_type][cast].port
-                            }), function(data, error){
-                                if(error || !data.success){
-                                    cb(data, error);
-                                    return;
-                                }else{
-                                    options = angular.extend(options, {'name': data[cast_type][cast].name});
-                                    status(cast_type, options, function(data2, error2){
-                                        if(error2 || !data2.success){
-                                            cb(angular.extend(data[cast_type][cast], data2), error);
-                                            return;
-                                        }else{
-                                            angular.extend(data[cast_type][cast], data2.status);
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }
-
-                    cb(data, null);
-                }
-            });
-        }
 
         // Core services of cast-central-service
         function list(type, options, cb){ query(get_url(type, 'list', options), cb); }

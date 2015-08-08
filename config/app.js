@@ -7,7 +7,12 @@
             'cast-central-web.common',
             'cast-central-web.casts'
         ])
-        .config(config);
+        .config(config)
+        .constant('CONSTANTS', {
+            'DEV': true,
+            'API_URL': 'http://localhost:8000/v1',
+            'POLLING_INTERVAL': 20 // Seconds
+        });
 
     config.$inject = ['$locationProvider', '$routeProvider'];
 
