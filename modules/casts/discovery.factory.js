@@ -20,7 +20,7 @@
         $log.log('DiscoveryFactory - initializing');
 
         // Stop the interval polling of available casts.
-        var stop_discovering = function(){ $interval.cancel(self.interval); }
+        var stop_discovering = function(){ $interval.cancel(self.interval); };
 
         // Start polling for available casts.
         var start_discovering = function(){
@@ -29,12 +29,12 @@
                 discover();
                 $log.debug('DiscoveryFactory -', cache);
             }, CONSTANTS.POLLING_INTERVAL * 1000);
-        }
+        };
 
         // Clears the local cache of discovered casts.
         var clear = function(){
             cache.chromecasts = {};
-        }
+        };
 
         // Tells the cast-central-service to search the 
         // network for any chromecast or roku or else? 
@@ -45,10 +45,10 @@
             $log.debug('discovering casting devices');
 
             // Chromecast
-            CastCentralServiceFactory.list('chromecast', {'protocol': 'SSDP'}, function(data, error){
+            CastCentralServiceFactory.list('chromecast', {}, function(data, error){
                 handle_discover('chromecasts', data, error);
             });
-        }
+        };
 
         // Handles the cast-central-service GET list response and 
         // adds the casts returned to the appropriate cache.  Send 
@@ -64,18 +64,11 @@
                 }
 
                 // Notify subscribers
-                for(subscriber in subscribers){
-                    subscribers[subscriber](cache);
-                }
+                $rootScope.$emit('discovery', cache);
             }else{
                 $log.error('Error:', error);
             }
-        }
-
-        // Subscription handlers
-        var add_subscription = function(name, cb){ subscribers[name] = cb; }
-        var delete_subscription = function(name, cb){ delete subscribers[name]; }
-        var subscribers = {};
+        };
 
         // Data tied to views
         var cache = {
@@ -90,11 +83,9 @@
             'clear': clear,
             'start': start_discovering,
             'stop': stop_discovering,
-            'cache': cache,
-            'add_subscription': add_subscription,
-            'delete_subscription': delete_subscription
+            'cache': cache
         });
 
         $log.log('DiscoveryFactory - initialized');
-    }
+    };
 })();
