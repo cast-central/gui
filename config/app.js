@@ -23,7 +23,7 @@
             .when('/casts', {
                 templateUrl: 'casts.html',
                 controller: 'CastsController',
-                controllerAs: 'casts'
+                controllerAs: 'castsCtrl'
             })
             .otherwise({
                 redirectTo: '/casts'

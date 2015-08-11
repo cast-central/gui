@@ -13,6 +13,8 @@
 	CastsController.$inject = ['$rootScope', '$scope', '$log', 'DiscoveryFactory'];
 
 	function CastsController($rootScope, $scope, $log, DiscoveryFactory){
+		$scope.casts = {'chromecasts': {}};
+
 		// Subscribe to 'discovery' event to update casts view
 		$rootScope.$on('discovery', function(event, cache){
 			$log.debug('CastsController - cache updated with:', cache);

@@ -24,6 +24,8 @@ module.exports = function config(target, dev){
 					'modules/common/module.js',
 					'modules/common/main.header.directive.js',
 					'modules/common/main.footer.directive.js',
+					'modules/common/loader.directive.js',
+					'modules/common/keys.filter.js',
 
 					// Modules/Casts
 					'modules/casts/module.js',

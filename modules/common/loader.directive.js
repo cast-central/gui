@@ -2,18 +2,18 @@
     'use strict';
 
     angular
-        .module('cast-central-web.casts')
-        .directive('cast', RenderCast);
+        .module('cast-central-web.common')
+        .directive('loader', RenderLoader);
 
-    function RenderCast() {
+    function RenderLoader() {
 
         // Definition of directive
         var directiveDefinitionObject = {
             restrict: 'E',
-            templateUrl: 'cast.html',
+            templateUrl: 'loader.html',
             compile: function(tElem, attrs){
                 return function(scope, elem, attrs){
-                    scope.cast = scope.$eval(attrs.cast);
+                    scope.text = attrs.text;
                 }
             }
         };

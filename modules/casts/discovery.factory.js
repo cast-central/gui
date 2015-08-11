@@ -45,7 +45,7 @@
             $log.debug('discovering casting devices');
 
             // Chromecast
-            CastCentralServiceFactory.list('chromecast', {}, function(data, error){
+            CastCentralServiceFactory.list('chromecast', {'protocol': 'ssdp'}, function(data, error){
                 handle_discover('chromecasts', data, error);
             });
         };
