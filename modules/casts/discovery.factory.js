@@ -12,11 +12,11 @@
     angular
         .module('cast-central-web.casts')
         .factory('DiscoveryFactory', [
-            '$rootScope', '$log', '$interval', 'CONSTANTS',
+            '$log', '$interval', 'CONSTANTS',
             'CastCentralServiceFactory', DiscoveryFactory
         ]);
 
-    function DiscoveryFactory($rootScope, $log, $interval, CONSTANTS, CastCentralServiceFactory){
+    function DiscoveryFactory($log, $interval, CONSTANTS, CastCentralServiceFactory){
         $log.log('DiscoveryFactory - initializing');
 
         // Stop the interval polling of available casts.
@@ -45,7 +45,10 @@
             $log.debug('discovering casting devices');
 
             // Chromecast
-            CastCentralServiceFactory.list('chromecast', {'protocol': 'ssdp'}, function(data, error){
+            CastCentralServiceFactory.list('chromecast', {
+                'protocol': 'ssdp',
+                'status': true
+            }, function(data, error){
                 handle_discover('chromecasts', data, error);
             });
         };
@@ -62,9 +65,6 @@
                 for(var cast in casts){
                     cache[type][casts[cast].name] = casts[cast];
                 }
-
-                // Notify subscribers
-                $rootScope.$emit('discovery', cache);
             }else{
                 $log.error('Error:', error);
             }
