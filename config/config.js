@@ -19,6 +19,7 @@ module.exports = function config(target, dev){
 					// Bower Components
 					'bower_components/angular/angular.'+(dev? '': 'min.')+'js',
 					'bower_components/angular-route/angular-route.'+(dev? '': 'min.')+'js',
+					'bower_components/async/dist/async.'+(dev? '': 'min.')+'js',
 
 					// Modules/Common
 					'modules/common/module.js',

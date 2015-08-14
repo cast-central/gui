@@ -66,13 +66,17 @@ function clean(cb){
 // Compile sass files
 function compile_sass(cb){
     console.log('Compiling sass...');
-    var css = sass.renderSync({
-        file: prefix+config.dependencies.sass.main,
-        includePaths: glob_arr_patterns(config.dependencies.sass.paths)
-    });
+    try{
+        var css = sass.renderSync({
+            file: prefix+config.dependencies.sass.main,
+            includePaths: glob_arr_patterns(config.dependencies.sass.paths)
+        });
 
-    fs.writeFileSync(prefix+argv.target+config.dependencies.sass.target, css.css);
-    cb(null);
+        fs.writeFileSync(prefix+argv.target+config.dependencies.sass.target, css.css);
+        cb(null);
+    }catch(e){
+        cb(e);
+    }
 }
 
 // Compress JS
@@ -134,7 +138,7 @@ function run_server(){
                 config = load_config();
                 build_finished = false;
                 async.series(get_steps(), function(err, results){
-                    if(err){ error(err); }
+                    if(err){ error(err, false); }
                     build_finished = true;
                 });
             }
@@ -176,9 +180,9 @@ function get_steps(){
 
 // Given an err object prints and exits the 
 // current process.
-function error(err){
+function error(err, exit){
     console.log('Error:', err);
-    process.exit(1);
+    if(exit){ process.exit(1); }
 }
 
 // Loads the configuration file.

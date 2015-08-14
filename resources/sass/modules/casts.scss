@@ -1,7 +1,21 @@
 .cast {
-	border-style: none none none solid;
-	border-color: green;
-	border-width: 4px;
+	display: inline-block;
+	width: 100%;
+	border-style: none solid none solid;
+	border-color: $text-color;
+	border-width: 2px;
+	vertical-align: middle;
+	padding: 0 2 0 2;
+
+	h4, h5 {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+	}
+}
+
+.cast:hover {
+	background-color: $hover-color;
 }
 
 .capitalize {

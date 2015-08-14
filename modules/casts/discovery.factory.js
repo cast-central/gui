@@ -42,14 +42,38 @@
         // the current status of the device keeping the 
         // results in a cache.
         var discover = function(){
-            $log.debug('discovering casting devices');
-
             // Chromecast
             CastCentralServiceFactory.list('chromecast', {
-                'protocol': 'ssdp',
-                'status': true
-            }, function(data, error){
-                handle_discover('chromecasts', data, error);
+                'protocol': 'ssdp'
+            }).then(function(data){
+                var chain = [];
+                for(var cast in data.chromecasts){
+                    cast = data.chromecasts[cast];
+
+                    chain.push({
+                        'action': CastCentralServiceFactory.connect,
+                        'params': {
+                            'type': 'chromecast',
+                            'options': cast
+                        }
+                    });
+
+                    chain.push({
+                        'action': CastCentralServiceFactory.status,
+                        'params': {
+                            'type': 'chromecast',
+                            'options': { 'name': cast.name }
+                        }
+                    });
+                }
+
+                CastCentralServiceFactory.query_chain(chain).then(function(results){
+                    handle_discover('chromecasts', results);
+                }, function(error){
+                    $log.error(error);
+                });
+            }, function(error){
+                $log.error(error);
             });
         };
 
