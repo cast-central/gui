@@ -16,7 +16,7 @@
     "chokidar": "*"
   },
   "scripts": {
-    "postinstall": "bower install --no-interactive --allow-root"
+    "postinstall": "./node_modules/.bin/bower install --no-interactive --allow-root"
   },
   "repository": {
     "type": "git",

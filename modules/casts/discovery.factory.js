@@ -27,13 +27,13 @@
             interval = $interval(function(){
                 $log.debug('DiscoveryFactory - discovering');
                 discover();
-                $log.debug('DiscoveryFactory -', cache);
+                $log.debug('DiscoveryFactory - discovered:', cache);
             }, CONSTANTS.POLLING_INTERVAL * 1000);
         };
 
         // Clears the local cache of discovered casts.
         var clear = function(){
-            cache.chromecasts = {};
+            cache.chromecast = {};
         };
 
         // Tells the cast-central-service to search the 
@@ -44,59 +44,49 @@
         var discover = function(){
             // Chromecast
             CastCentralServiceFactory.list('chromecast', {
-                'protocol': 'ssdp'
-            }).then(function(data){
-                var chain = [];
-                for(var cast in data.chromecasts){
-                    cast = data.chromecasts[cast];
-
-                    chain.push({
-                        'action': CastCentralServiceFactory.connect,
-                        'params': {
-                            'type': 'chromecast',
-                            'options': cast
-                        }
-                    });
-
-                    chain.push({
-                        'action': CastCentralServiceFactory.status,
-                        'params': {
-                            'type': 'chromecast',
-                            'options': { 'name': cast.name }
-                        }
-                    });
-                }
-
-                CastCentralServiceFactory.query_chain(chain).then(function(results){
-                    handle_discover('chromecasts', results);
-                }, function(error){
-                    $log.error(error);
-                });
+                'protocol': 'mdns'
+            }).then(function(results){
+                handle_discover('chromecast', results);
             }, function(error){
                 $log.error(error);
             });
         };
 
         // Handles the cast-central-service GET list response and 
-        // adds the casts returned to the appropriate cache.  Send 
-        // the appropriate event to the added subscribers.
-        var handle_discover = function(type, data, error){
-            if((typeof error === 'undefined' || error === null) && data.success === true){
+        // adds the casts returned to the appropriate cache after 
+        // obtaining the casting devices status.
+        var handle_discover = function(type, data){
+            $log.debug(data);
+            if(data.success === true){
                 var casts = data[type];
                 cache[type] = {};
 
-                // Update cache
+                // Loop through and get the current status of each 
+                // cast.
                 for(var cast in casts){
                     cache[type][casts[cast].name] = casts[cast];
+
+                    // Get the current status of the cast
+                    CastCentralServiceFactory.status(type, {
+                        'name': casts[cast].name
+                    }).then(function(status){
+                        if(status.success === true){
+                            cache[type][casts[cast].name].status = status;
+                        }else{
+                            cache[type][casts[cast].name].status = status.message;
+                        }
+                    }, function(error){
+                        $log.error(error);
+                    });
                 }
             }else{
-                $log.error('Error:', error);
+                $log.error(data.message);
             }
         };
 
-        // Data tied to views
+        // Data tied to controllers
         var cache = {
-            'chromecasts': {}
+            'chromecast': {}
         };
 
         // Start the casts discover'er by default

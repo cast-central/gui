@@ -27,8 +27,7 @@
             'seek': seek,
             'stop': stop,
             'status': status,
-            'connect': connect,
-            'query_chain': query_chain
+            'connect': connect
         };
 
         return(service);
@@ -43,47 +42,6 @@
         function stop(type, options){      return(query(get_url(type, 'stop', options))); }
         function status(type, options){    return(query(get_url(type, 'status', options))); }
         function connect(type, options){   return(query(get_url(type, 'connect', options))); }
-
-        // Chains multiple query calls together such that 
-        // if the previous one is successful then it will 
-        // go onto the next call otherwise just returns 
-        // an error and the data collected.
-        // 
-        // Example queries param:
-        //   [
-        //       {
-        //           'action': <point to query function>,
-        //           'params': {type: <...>, options: <...>}
-        //       },{ ... }
-        //   ]
-        function query_chain(queries){
-            // Load the query chain up
-            var queries_with_callback = [];
-            for(q in queries){
-                queries_with_callback.push(function(cb){
-                    queries[q].action(
-                        queries[q].params.type, 
-                        queries[q].params.options
-                    ).then(function(data){
-                        cb(null, data);
-                    }, function(error){
-                        cb(error);
-                    });
-                });
-            }
-
-            // Return a promise for either when the query chain 
-            // errors or when the final query is complete.
-            return($q(function(resolve, reject){
-                async.series(queries_with_callback, function(error, results){
-                    if(error){
-                        reject(error);
-                    }else{
-                        resolve(results);
-                    }
-                });
-            }));
-        }
 
         // Standard ASYNC call to RESTful server calling 
         // callback with data or error responses.
