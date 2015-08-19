@@ -43,11 +43,7 @@ module.exports = function config(target, dev){
 			},
 			sass: {
 				main: 'resources/sass/style.scss',
-				paths: [
-		           'resources/sass/breakpoints',
-		           'resources/sass/modules',
-		           'resources/sass/partials'
-				],
+				paths: [  ],
 				target: 'style.compiled.css'
 			},
 			css: {
