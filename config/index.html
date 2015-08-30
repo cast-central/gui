@@ -1,8 +1,5 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-csp="" ng-app="cast-central-web"> <!--<![endif]-->
+<html lang="en" ng-csp="" ng-app="cast-central-web">
 <head>
 	<base href="/">
 	<meta charset="utf-8">
@@ -16,20 +13,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 
-	<!--[if IE]>
-		<link rel="shortcut icon" href="images/favicon.ico">
-	<![endif]-->
-	<!-- or, set /favicon.ico for IE10 win -->
-	<meta name="msapplication-TileColor" content="#f01d4f">
-
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="style.min.css" />
 </head>
-<body class="main-wrapper">
-	<!--[if lt IE 8]>
-	    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
-
+<body>
 	<!-- Header/Navigation -->
 	<main-header></main-header>
 
@@ -37,7 +24,7 @@
 	<div data-ng-view="" class="container"></div>
 
 	<!-- Foot -->
-	<!--<main-footer></main-footer>-->
+	<main-footer></main-footer>
 </body>
 	<!-- JS -->
 	<script type="text/javascript" src="app.min.js"></script>

@@ -19,6 +19,7 @@ module.exports = function config(target, dev){
 					// Bower Components
 					'bower_components/angular/angular.'+(dev? '': 'min.')+'js',
 					'bower_components/angular-route/angular-route.'+(dev? '': 'min.')+'js',
+					'bower_components/angular-bootstrap/ui-bootstrap.'+(dev? '': 'min.')+'js',
 					'bower_components/async/dist/async.'+(dev? '': 'min.')+'js',
 
 					// Modules/Common
@@ -48,6 +49,8 @@ module.exports = function config(target, dev){
 			},
 			css: {
 				paths: [
+					'bower_components/bootstrap/dist/css/bootstrap.css',
+					'bower_components/bootstrap/dist/css/bootstrap-theme.css',
 					target+'style.compiled.css'
 				],
 				compress: dev,

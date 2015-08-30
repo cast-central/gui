@@ -1,10 +1,9 @@
-<div class="container cf">
-   	<div ng-repeat="(cast_type, casts) in casts">
-		<h3 class="capitalize">{{ cast_type }}</h3>
-
-        <loader ng-if="(casts | keys).length === 0" text="Loading {{ cast_type }}..."></loader>
-        <div ng-repeat="cast in casts">
+<div class="panel panel-default" ng-repeat="(cast_type, casts) in casts">
+	<div class="panel-heading text-capitalize">{{ cast_type }}</div>
+	<div class="panel-body">
+	    <loader ng-if="(casts | keys).length === 0" text="Loading {{ cast_type }}..."></loader>
+	    <div class="list-group" ng-repeat="cast in casts">
 			<cast cast="{{ cast }}"></cast>
 		</div>
-    </div>
+	</div>
 </div>

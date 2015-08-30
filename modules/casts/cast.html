@@ -1,5 +1,10 @@
-<div class="cast">
-	<h4>{{ cast.name }}</h4>
-	<h5>{{ cast.address }}:{{ cast.port }}</h5>
-	<p ng-if="cast.status">{{ cast.status }}</p>
+<div class="list-group-item">
+	<span ng-if="cast.status" class="badge">{{ cast.status }}</span>
+	<h4 class="list-group-item-heading">
+		{{ cast.name }}
+		<small>{{ cast.address }}:{{ cast.port }}</small>
+	</h4>
+	<p class="list-group-item-text">
+		<!-- TODO -->
+	</p>
 </div>
