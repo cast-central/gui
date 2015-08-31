@@ -108,16 +108,52 @@ function compress_css(cb){
 // Images
 function images(cb){
     console.log('Moving images...');
-    var images = convert_paths_command(glob_arr_patterns(config.dependencies.images.paths));
-    execSync('/bin/cp '+images+' '+prefix+argv.target+config.dependencies.images.target);
+    copy_to_target(
+        glob_arr_patterns(config.dependencies.images.paths), 
+        prefix+argv.target+config.dependencies.images.target
+    );
     cb(null);
 }
 
 // HTML
 function html(cb){
     console.log('Moving html...');
-    var html = convert_paths_command(glob_arr_patterns(config.dependencies.html.paths));
-    execSync('/bin/cp '+html+' '+prefix+argv.target+config.dependencies.html.target);
+    copy_to_target(
+        glob_arr_patterns(config.dependencies.html.paths),
+        prefix+argv.target+config.dependencies.html.target
+    );
+    cb(null);
+}
+
+// OTHERS
+function others(cb){
+    console.log('Moving others...');
+    var _others = config.dependencies.others;
+
+    for(var other in _others){
+        copy_to_target(
+            glob_arr_patterns(_others[other].paths),
+            prefix+argv.target+_others[other].target
+        );
+    }
+
+    cb(null);
+}
+
+// MERGES
+function merges(cb){
+    console.log('Merging...');
+    for(var merge in config.merges){
+        new compressor.minify({
+            type: 'no-compress',
+            fileIn: glob_arr_patterns(config.merges[merge].paths),
+            fileOut: prefix+argv.target+config.merges[merge].target,
+            callback: function(err, min){
+                if(err){ cb(err); }
+            }
+        });
+    }
+
     cb(null);
 }
 
@@ -173,6 +209,8 @@ function get_steps(){
         steps.push(compress_js);
         steps.push(images);
         steps.push(html);
+        steps.push(others);
+        steps.push(merges);
     }
 
     return(steps);
@@ -217,4 +255,13 @@ function convert_paths_command(paths){
     }
 
     return(command_string);
+}
+
+// Given an array of src's and a destination 
+// run the cp/mkdir -p commands to move them 
+// there successfully.
+function copy_to_target(srcs, dest){
+    srcs = convert_paths_command(srcs);
+    execSync('/bin/mkdir -p '+dest);
+    execSync('/bin/cp -r '+srcs+' '+dest);
 }

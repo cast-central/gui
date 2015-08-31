@@ -45,13 +45,13 @@ module.exports = function config(target, dev){
 			sass: {
 				main: 'resources/sass/style.scss',
 				paths: [  ],
-				target: 'style.compiled.css'
+				target: 'sass.compiled.css'
 			},
 			css: {
 				paths: [
 					'bower_components/bootstrap/dist/css/bootstrap.css',
 					'bower_components/bootstrap/dist/css/bootstrap-theme.css',
-					target+'style.compiled.css'
+					target+'sass.compiled.css'
 				],
 				compress: dev,
 				target: 'style.min.css'
@@ -69,7 +69,25 @@ module.exports = function config(target, dev){
 					'resources/images/*'
 				],
 				target: ''
-			}
-		} // Dependencies
+			},
+			others: [
+				{
+					paths: [
+						'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff'
+					],
+					target: 'fonts/'
+				}
+			],
+		}, // Dependencies
+
+		// References files all of which are to be merged 
+		// into one file.  Generally speaking the files 
+		// to be merged come from the dependencies config.
+		merges: [
+			/*{
+				paths: [  ],
+				target: ''
+			}*/
+		]
 	});
 };
