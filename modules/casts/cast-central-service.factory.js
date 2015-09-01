@@ -13,10 +13,11 @@
     angular
         .module('cast-central-web.casts')
         .factory('CastCentralServiceFactory', [
-            '$log', '$http', '$q', '$interval', 'CONSTANTS', CastCentralServiceFactory
+            '$log', '$http', '$q', '$interval', 'CONSTANTS', 
+            'CommonFactory', CastCentralServiceFactory
         ]);
 
-    function CastCentralServiceFactory($log, $http, $q, $interval, CONSTANTS){
+    function CastCentralServiceFactory($log, $http, $q, $interval, CONSTANTS, CommonFactory){
         // 'Real' service interaction
         var service = {
             'list': list,
@@ -51,8 +52,11 @@
                     method: 'GET',
                     url: url
                 }).then(function(data){
+                    CommonFactory.set_connected(true);
+                    CommonFactory.set_timestamp(new Date());
                     resolve(data.data);
                 }, function(error){
+                    CommonFactory.set_connected(false);
                     reject(error);
                 });
             }));

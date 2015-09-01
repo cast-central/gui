@@ -24,10 +24,12 @@ module.exports = function config(target, dev){
 
 					// Modules/Common
 					'modules/common/module.js',
+					'modules/common/common.factory.js',
 					'modules/common/main.header.directive.js',
 					'modules/common/main.footer.directive.js',
 					'modules/common/loader.directive.js',
 					'modules/common/keys.filter.js',
+					'modules/common/common.controller.js',
 
 					// Modules/Casts
 					'modules/casts/module.js',

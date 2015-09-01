@@ -1,14 +1,14 @@
-<nav class="footer navbar-fixed-bottom">
+<nav class="footer navbar-fixed-bottom" ng-controller="CommonController">
 	<div class="navbar-left">
 		<p class="text-muted">
 			<span class="glyphicon glyphicon-copyright-mark"></span>
-			Justin Lathrop &lt;jelathrop@gmail.com&gt;
+			Jelathro
 		</p>
 	</div>
 	<div class="navbar-right">
 		<p class="text-muted">
 			<span class="glyphicon glyphicon-time"></span>
-			&lt;timestamp here&gt;
+			{{ timestamp | date:'MM/dd/yyyy hh:mm:ss a' }}
 		</p>
 	</div>
 </nav>
